@@ -2,13 +2,13 @@ class NewsController < ApplicationController
   # GET /news
   # GET /news.json
   def index
-    # @news = News.all
+    @news = News.all
 
-    if( params[:latestOrMore] == 'more' )
-      @news = 'more'
-    else
-      @news = 'less'
-    end
+    # if( params[:latestOrMore] == 'more' )
+    #   @news = 'more'
+    # else
+    #   @news = 'less'
+    # end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -16,13 +16,13 @@ class NewsController < ApplicationController
     end
   end
 
-  def get
-    if( latestOrMore == '1' )
-      @news = 'more'
-    else
-      @news = 'more'
-    end
-  end
+  # def get
+  #   if( latestOrMore == '1' )
+  #     @news = 'more'
+  #   else
+  #     @news = 'more'
+  #   end
+  # end
 
   # GET /news/1
   # GET /news/1.json
@@ -55,6 +55,8 @@ class NewsController < ApplicationController
   # POST /news.json
   def create
     @news = News.new(params[:news])
+
+    puts params[:news]
 
     respond_to do |format|
       if @news.save
