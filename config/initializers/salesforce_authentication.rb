@@ -13,5 +13,7 @@ puts "> authentication with username and password"
 puts "> instance url " + @@client.instance_url
 
 # get news
-# News.getNews( 'null', 'more')
 News.get_news_from_salesforce
+
+# get grounds
+Ground.get_grounds_from_salesforce
