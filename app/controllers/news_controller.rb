@@ -2,7 +2,7 @@ class NewsController < ApplicationController
   # GET /news
   # GET /news.json
   def index
-    # @news = News.all
+
 
     begin
 
@@ -15,6 +15,9 @@ class NewsController < ApplicationController
         # onlyDate = dateAndTime[0].split('/')
         # onlyTime = dateAndTime[1].split(':')
         # delimitationDate = DateTime.new(onlyDate[0],onlyDate[1],onlyDate[2],onlyTime[0],onlyTime[1],onlyTime[2])
+
+        puts params[:latestOrMore]
+
         if( params[:latestOrMore] == 'more' )
           @news = News.where("date < ?", params[:delimitationDate]).limit(6).order("date DESC") # Gets more news
           # News.where("date > ?", "2012-12-10 12:59:04").limit(4).order("date DESC")
@@ -25,8 +28,9 @@ class NewsController < ApplicationController
         end
       end
 
-    rescue
+    rescue => e
       @news = nil;
+      puts e.message
     end
 
     respond_to do |format|
@@ -36,13 +40,13 @@ class NewsController < ApplicationController
 
   end
 
-  def get
-    if( latestOrMore == '1' )
-      @news = 'more'
-    else
-      @news = 'more'
-    end
-  end
+  # def get
+  #   if( latestOrMore == '1' )
+  #     @news = 'more'
+  #   else
+  #     @news = 'more'
+  #   end
+  # end
 
   # GET /news/1
   # GET /news/1.json
@@ -75,6 +79,8 @@ class NewsController < ApplicationController
   # POST /news.json
   def create
     @news = News.new(params[:news])
+
+    puts params[:news]
 
     respond_to do |format|
       if @news.save

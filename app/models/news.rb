@@ -1,16 +1,17 @@
 class News < ActiveRecord::Base
     attr_accessible :body, :date, :newsImageUrl, :recordId, :title
 
-  	# get the news from salesforce | https://<instance_url>/services/apexrest/kio/v1.0/getNews
-	def self.getNews( delimitationDate, latestOrMore )
+  	# get the news from salesforce | https://<instance_url>/services/apexrest/kio/v1.0/getNews?delimitationDate=xx&latestOrMode=xx
+	def self.getNews
 		begin
 			puts '> get news from salesforce'
-			# Performs an HTTP GET request to the specified path (relative to self.instance_url).
-			# Query parameters are included from parameters.
-			# The required Authorization header is automatically included, as are any additional headers specified in headers.
-			# Returns the HTTPResult if it is of type HTTPSuccess- raises SalesForceError otherwise.
+
+			# delimitation date is the date of the most recent news in the db
+			delimitationDate = 'null'
+
+			# prepare call
 			endpoint = '/kio/v1.0/getNews'
-			params   = '?' + 'delimitationDate=' + delimitationDate + '&latestOrMore=' + latestOrMore
+			params   = '?' + 'delimitationDate=' + delimitationDate + '&latestOrMore=' + 'more'
 			url      = @@client.instance_url + '/services/apexrest' + endpoint + params
 
 			# http call
@@ -21,9 +22,10 @@ class News < ActiveRecord::Base
 			newsList    = JSON.parse(parsed_json)
 
 			# create an object for each element of the array
-			# newsList.each do |object|
-			# 	self.create( object )
-			# end
+			newsList.each do |object|
+				puts object
+				self.create( object )
+			end
 
 		rescue Databasedotcom::SalesForceError => e
 			puts '> error getting news' + e.message
