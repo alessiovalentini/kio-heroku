@@ -7,8 +7,8 @@ class NewsController < ApplicationController
     begin
 
       if( params[:delimitationDate] == 'null' )
-        News.order("date DESC").limit(6) # Gets more news
-        @news = 'more'
+        @news = News.order("date DESC").limit(6) # Gets more news
+        # @news = 'more'
       else
         # converts date
         dateAndTime = params[:delimitationDate].split(' ')
@@ -16,11 +16,11 @@ class NewsController < ApplicationController
         onlyTime = dateAndTime[1].split(':')
         delimitationDate = DateTime.new(onlyDate[0],onlyDate[1],onlyDate[2],onlyTime[1],onlyTime[2],onlyTime[3])
         if( params[:latestOrMore] == 'more' )
-          News.where("date < ?", :delimitationDate).order("date DESC").limit(6) # Gets more news
-          @news = 'more'
+          @news = News.where("date < ?", :delimitationDate).order("date DESC").limit(6) # Gets more news
+          # @news = 'more'
         else
-          @news = 'less'
-          News.where("date > ?", :delimitationDate).order("date DESC").limit(100) # Gets latest news
+          # @news = 'less'
+          @news = News.where("date > ?", :delimitationDate).order("date DESC").limit(100) # Gets latest news
         end
       end
 
