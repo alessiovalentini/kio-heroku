@@ -21,9 +21,9 @@ class News < ActiveRecord::Base
 			newsList    = JSON.parse(parsed_json)
 
 			# create an object for each element of the array
-			newsList.each do |object|
-				self.create( object )
-			end
+			# newsList.each do |object|
+			# 	self.create( object )
+			# end
 
 		rescue Databasedotcom::SalesForceError => e
 			puts '> error getting news' + e.message
