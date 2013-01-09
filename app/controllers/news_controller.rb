@@ -11,10 +11,17 @@ class NewsController < ApplicationController
         # @news = 'more'
       else
         # converts date
+        puts params[:delimitationDate]
         dateAndTime = params[:delimitationDate].split(' ')
+        puts dateAndTime
         onlyDate = dateAndTime[0].split('/')
         onlyTime = dateAndTime[1].split(':')
-        delimitationDate = DateTime.new(onlyDate[0],onlyDate[1],onlyDate[2],onlyTime[0],onlyTime[1],onlyTime[2])
+
+        puts onlyDate
+        puts onlyTime
+
+        delimitationDate = DateTime.new(onlyDate[2].to_i,onlyDate[1].to_i,onlyDate[0].to_i,onlyTime[0].to_i,onlyTime[1].to_i,onlyTime[2].to_i)
+
         if( params[:latestOrMore] == 'more' )
           @news = News.where("date < ?", :delimitationDate).order("date DESC").limit(6) # Gets more news
           # @news = 'more'
@@ -24,8 +31,9 @@ class NewsController < ApplicationController
         end
       end
 
-    rescue
+    rescue => e
       @news = nil;
+      puts e.message
     end
 
     respond_to do |format|
