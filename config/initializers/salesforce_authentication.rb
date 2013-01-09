@@ -14,4 +14,4 @@ puts "> instance url " + @@client.instance_url
 
 # get news
 # News.getNews( 'null', 'more')
-News.getNews
+News.get_news_from_salesforce

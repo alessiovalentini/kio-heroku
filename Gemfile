@@ -25,6 +25,8 @@ gem "thin"
 
 gem 'databasedotcom'
 
+gem 'geokit'
+
 gem 'awesome_print'
 
 # To use ActiveModel has_secure_password
