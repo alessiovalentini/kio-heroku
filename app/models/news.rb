@@ -38,7 +38,7 @@ class News < ActiveRecord::Base
 				end
 
 				# log
-				puts '> saved ' + result_news_list.length + 'news into the db'
+				puts '> saved ' + result_news_list.length.to_s + 'news into the db'	   # nb convert int to string
 			else
 				# log
 				puts '> no new news'
