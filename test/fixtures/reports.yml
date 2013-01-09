@@ -1,0 +1,37 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  recordId: MyString
+  groundId: MyString
+  block: MyString
+  row: MyString
+  seat: MyString
+  otherGroundName: MyString
+  otherGroundDescription: MyText
+  reportDate: 2013-01-08 13:33:20
+  description: MyText
+  name: MyString
+  phone: MyString
+  email: MyString
+  address: MyString
+  lat: MyString
+  lng: MyString
+  abuseType: MyString
+
+two:
+  recordId: MyString
+  groundId: MyString
+  block: MyString
+  row: MyString
+  seat: MyString
+  otherGroundName: MyString
+  otherGroundDescription: MyText
+  reportDate: 2013-01-08 13:33:20
+  description: MyText
+  name: MyString
+  phone: MyString
+  email: MyString
+  address: MyString
+  lat: MyString
+  lng: MyString
+  abuseType: MyString

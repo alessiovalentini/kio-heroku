@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Recordid:</b>
+  <%= @ground.recordId %>
+</p>
+
+<p>
+  <b>Groundname:</b>
+  <%= @ground.groundName %>
+</p>
+
+
+<%= link_to 'Edit', edit_ground_path(@ground) %> |
+<%= link_to 'Back', grounds_path %>

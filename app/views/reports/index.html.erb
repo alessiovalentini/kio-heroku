@@ -1,0 +1,53 @@
+<h1>Listing reports</h1>
+
+<table>
+  <tr>
+    <th>Recordid</th>
+    <th>Groundid</th>
+    <th>Block</th>
+    <th>Row</th>
+    <th>Seat</th>
+    <th>Othergroundname</th>
+    <th>Othergrounddescription</th>
+    <th>Reportdate</th>
+    <th>Description</th>
+    <th>Name</th>
+    <th>Phone</th>
+    <th>Email</th>
+    <th>Address</th>
+    <th>Lat</th>
+    <th>Lng</th>
+    <th>Abusetype</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @reports.each do |report| %>
+  <tr>
+    <td><%= report.recordId %></td>
+    <td><%= report.groundId %></td>
+    <td><%= report.block %></td>
+    <td><%= report.row %></td>
+    <td><%= report.seat %></td>
+    <td><%= report.otherGroundName %></td>
+    <td><%= report.otherGroundDescription %></td>
+    <td><%= report.reportDate %></td>
+    <td><%= report.description %></td>
+    <td><%= report.name %></td>
+    <td><%= report.phone %></td>
+    <td><%= report.email %></td>
+    <td><%= report.address %></td>
+    <td><%= report.lat %></td>
+    <td><%= report.lng %></td>
+    <td><%= report.abuseType %></td>
+    <td><%= link_to 'Show', report %></td>
+    <td><%= link_to 'Edit', edit_report_path(report) %></td>
+    <td><%= link_to 'Destroy', report, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Report', new_report_path %>
