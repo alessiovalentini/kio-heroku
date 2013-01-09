@@ -16,7 +16,7 @@ class NewsController < ApplicationController
         # onlyTime = dateAndTime[1].split(':')
         # delimitationDate = DateTime.new(onlyDate[0],onlyDate[1],onlyDate[2],onlyTime[0],onlyTime[1],onlyTime[2])
 
-        puts params[:latestOrMore]
+        puts params[:delimitationDate]
 
         if( params[:latestOrMore] == 'more' )
           @news = News.where("date < ?", params[:delimitationDate]).limit(6).order("date DESC") # Gets more news
