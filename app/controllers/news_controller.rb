@@ -2,18 +2,37 @@ class NewsController < ApplicationController
   # GET /news
   # GET /news.json
   def index
-    @news = News.all
 
-    # if( params[:latestOrMore] == 'more' )
-    #   @news = 'more'
-    # else
-    #   @news = 'less'
-    # end
+
+    begin
+
+      if( params[:delimitationDate] == 'null' )
+        @news = News.order("date DESC").limit(6) # Gets more news
+        # @news = 'more'
+      else
+        # converts date
+        dateAndTime = params[:delimitationDate].split(' ')
+        onlyDate = dateAndTime[0].split('/')
+        onlyTime = dateAndTime[1].split(':')
+        delimitationDate = DateTime.new(onlyDate[0],onlyDate[1],onlyDate[2],onlyTime[1],onlyTime[2],onlyTime[3])
+        if( params[:latestOrMore] == 'more' )
+          @news = News.where("date < ?", :delimitationDate).order("date DESC").limit(6) # Gets more news
+          # @news = 'more'
+        else
+          # @news = 'less'
+          @news = News.where("date > ?", :delimitationDate).order("date DESC").limit(100) # Gets latest news
+        end
+      end
+
+    rescue
+      @news = nil;
+    end
 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @news }
     end
+
   end
 
   # def get
