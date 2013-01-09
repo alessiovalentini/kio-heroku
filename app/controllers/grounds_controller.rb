@@ -2,9 +2,7 @@ class GroundsController < ApplicationController
   # GET /grounds
   # GET /grounds.json
   def index
-    # @grounds = Ground.all
-
-    Ground.find(:all, :origin =>[37.792,-122.393], :within=>10)
+    @grounds = Ground.all
 
     respond_to do |format|
       format.html # index.html.erb
