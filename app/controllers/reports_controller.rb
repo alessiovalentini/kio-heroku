@@ -1,3 +1,5 @@
+require 'date'
+
 class ReportsController < ApplicationController
   # GET /reports
   # GET /reports.json
@@ -49,16 +51,26 @@ class ReportsController < ApplicationController
       report_list.each do |object|
         # remove the sencha id
         object.delete(:id)
+
+        # convert datetime in rails format (by Manuel Olvera)
+        # dateAndTime  = object[:reportDate].split(' ')
+        # dateOnly     = dateAndTime[0].split('/')
+        # timeOnly     = dateAndTime[1].split(':')
+
+        # heroku_date = dateOnly[2] + '-' + dateOnly[1] + '-' + dateOnly[0] + 'T' + timeOnly[0] + ':' + timeOnly[1] + ':00+00:00'
+        # object[:reportDate] = DateTime.new(dateOnly[0],dateOnly[1],dateOnly[2],timeOnly[0],timeOnly[1],timeOnly[2])
+        # object[:reportDate] = DateTime.parse(object[:reportDate])
+        # object[:reportDate] = heroku_date
         # save record locally
         Report.create( object )
       end
 
       # set success status
-      @status = { :status => '200', :statusText => 'success', :saved => @saved }
-      @saved  = params[:reportList]
+      saved  = params[:reportList]
+      @status = { :status => '200', :statusText => 'success', :saved => saved }
 
     rescue => e
-      puts '> error saving reports' + e.message
+      puts '> error saving reports ' + e.message
       # set error status
       @status = { :status => '500', :statusText => e.message, :saved => nil }
     end
