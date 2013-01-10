@@ -5,22 +5,17 @@ class GroundsController < ApplicationController
     begin
 
       if( params[:lat] == 'null' ||   params[:lng] == 'null' )
-        @grounds = Ground.order("groundName DESC") # gets all grounds ordered by name
-        puts @grounds
+        @grounds = Ground.order("\"groundName\" ASC") # gets all grounds ordered by name
       else
-        puts params[:lat]
-        puts params[:lng]
-
-        all_grounds_order_by_name = Ground.where(":groundName != 'Other Ground'").order("groundName DESC")
-        other_ground = Ground.where(":groundName = 'Other Ground'")
+        all_grounds_order_by_name = Ground.where("\"groundName\" != 'Other Ground'").order("\"groundName\" ASC")
+        other_ground = Ground.where("\"groundName\" = 'Other Ground'")
         nearest_grounds = Ground.near( [params[:lat], params[:lng]], 10, :order => :distance )
         @grounds = nearest_grounds + other_ground + (all_grounds_order_by_name - nearest_grounds)
-        puts @grounds
       end
 
     rescue => e
       @grounds = nil;
-      puts e.message
+      puts '> error getting grounds' + e.message
     end
 
     respond_to do |format|
