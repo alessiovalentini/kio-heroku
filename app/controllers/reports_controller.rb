@@ -57,7 +57,8 @@ class ReportsController < ApplicationController
   # POST /reports/create_batch.json
   def create_batch
 
-    puts params
+    puts params[:reportList]
+
     # @ground = Ground.new(params[:ground])
 
     # respond_to do |format|
