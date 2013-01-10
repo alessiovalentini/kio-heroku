@@ -1,6 +1,11 @@
 class Ground < ActiveRecord::Base
     attr_accessible :groundName, :recordId, :latitude, :longitude
 
+    geocoded_by         :full_street_address
+    after_validation    :geocode
+    reverse_geocoded_by :latitude, :longitude
+    after_validation    :reverse_geocode
+
     # get the grounds from salesforce | https://<instance_url>/services/apexrest/kio/v1.0/getGrounds?lat=null&lng=null
     def self.get_grounds_from_salesforce
     	begin
