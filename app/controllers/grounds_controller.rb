@@ -2,7 +2,26 @@ class GroundsController < ApplicationController
   # GET /grounds
   # GET /grounds.json
   def index
-    @grounds = Ground.all
+    begin
+
+      if( params[:lat] == 'null' ||   params[:lng] == 'null' )
+        @grounds = Ground.order("groundName DESC") # gets all grounds ordered by name
+        puts @grounds
+      else
+        puts params[:lat]
+        puts params[:lng]
+
+        all_grounds_order_by_name = Ground.where(":groundName != 'Other Ground'").order("groundName DESC")
+        other_ground = Ground.where(":groundName = 'Other Ground'")
+        nearest_grounds = Ground.near( [params[:lat], params[:lng]], 10, :order => :distance )
+        @grounds = nearest_grounds + other_ground + (all_grounds_order_by_name - nearest_grounds)
+        puts @grounds
+      end
+
+    rescue => e
+      @grounds = nil;
+      puts e.message
+    end
 
     respond_to do |format|
       format.html # index.html.erb
