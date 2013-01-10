@@ -32,6 +32,9 @@ class Ground < ActiveRecord::Base
 
 				# delete local records removed from the server
 				self.delete_deleted_grounds
+			else
+				# log
+				puts '> no new grounds'
 			end
 
 

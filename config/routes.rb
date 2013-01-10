@@ -1,11 +1,11 @@
 Kio::Application.routes.draw do
-  # resources :reports
+  resources :reports
   resources :grounds
   resources :news
   # resources :authentications
 
   # custom routes (disable resources or use nested routes)
-  match '/reports/create_batch' => 'reports#create_batch'
+  # match '/reports/create_batch' => 'reports#create_batch'
 
   # omniauth routes
   # match '/auth/:provider/callback' => 'authentications#callback_login'  # provider dynamically change ex. salesforce
