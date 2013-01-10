@@ -53,6 +53,24 @@ class ReportsController < ApplicationController
     end
   end
 
+  # POST /reports/create_batch
+  # POST /reports/create_batch.json
+  def create_batch
+
+    puts params
+    # @ground = Ground.new(params[:ground])
+
+    # respond_to do |format|
+    #   if @ground.save
+    #     format.html { redirect_to @ground, notice: 'Ground was successfully created.' }
+    #     format.json { render json: @ground, status: :created, location: @ground }
+    #   else
+    #     format.html { render action: "new" }
+    #     format.json { render json: @ground.errors, status: :unprocessable_entity }
+    #   end
+    # end
+  end
+
   # PUT /reports/1
   # PUT /reports/1.json
   def update
