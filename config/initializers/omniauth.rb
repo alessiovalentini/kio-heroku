@@ -8,9 +8,9 @@
 
 # provider can change from salesforce to x
 
-Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :salesforce, ENV['DATABASEDOTCOM_CLIENT_ID'], ENV['DATABASEDOTCOM_CLIENT_SECRET']
-end
+# Rails.application.config.middleware.use OmniAuth::Builder do
+#   provider :salesforce, ENV['DATABASEDOTCOM_CLIENT_ID'], ENV['DATABASEDOTCOM_CLIENT_SECRET']
+# end
 
 ############################################################################################
 # notes

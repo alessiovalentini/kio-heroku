@@ -16,17 +16,23 @@ end
 
 gem 'jquery-rails'
 
-# my gems
+# instead of sqlite
 gem 'pg'
 
-gem 'omniauth'
-gem "omniauth-salesforce", ">=1.0.3"
+# https://github.com/intridea/omniauth/wiki
+# https://github.com/richardvanhook/omniauth-salesforce
+# gem 'omniauth'
+# gem "omniauth-salesforce", ">=1.0.3"
 gem "thin"
 
+# http://rubydoc.info/github/heroku/databasedotcom
 gem 'databasedotcom'
 
+# https://github.com/alexreisner/geocoder
+# http://railscasts.com/episodes/273-geocoder?view=comments
 gem 'geocoder'
 
+# better printing in rails console (use ap <command>)
 gem 'awesome_print'
 
 # To use ActiveModel has_secure_password
