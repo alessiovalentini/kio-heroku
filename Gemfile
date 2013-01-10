@@ -25,7 +25,7 @@ gem "thin"
 
 gem 'databasedotcom'
 
-gem 'geokit'
+gem 'geocoder'
 
 gem 'awesome_print'
 
