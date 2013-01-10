@@ -40,36 +40,39 @@ class ReportsController < ApplicationController
   # POST /reports
   # POST /reports.json
   def create
-    @report = Report.new(params[:report])
+
+    begin
+
+      report_list = params[:reportList]
+
+      # create an object for each element of the array
+      rails_parsed_list.each do |object|
+        # remove the sencha id
+        object.delete(:id)
+        # save record locally
+        Report.create( object )
+      end
+
+      # set success status
+      @status = { :status => '200', :statusText => 'success', :saved => @saved }
+      @saved  = params[:reportList]
+
+    rescue => e
+      puts '> error saving reports' + e.message
+      # set error status
+      @status = { :status => '500', :statusText => e.message, :saved => nil }
+    end
 
     respond_to do |format|
-      if @report.save
+      # if @report.save
         format.html { redirect_to @report, notice: 'Report was successfully created.' }
-        format.json { render json: @report, status: :created, location: @report }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @report.errors, status: :unprocessable_entity }
-      end
+        # format.json { render json: @report, status: :created, location: @report }
+        format.json { render json: @status, status: :ok, location: @report }
+      # else
+      #   format.html { render action: "new" }
+      #   format.json { render json: @report.errors, status: :unprocessable_entity }
+      # end
     end
-  end
-
-  # POST /reports/create_batch
-  # POST /reports/create_batch.json
-  def create_batch
-
-    puts params[:reportList]
-
-    # @ground = Ground.new(params[:ground])
-
-    # respond_to do |format|
-    #   if @ground.save
-    #     format.html { redirect_to @ground, notice: 'Ground was successfully created.' }
-    #     format.json { render json: @ground, status: :created, location: @ground }
-    #   else
-    #     format.html { render action: "new" }
-    #     format.json { render json: @ground.errors, status: :unprocessable_entity }
-    #   end
-    # end
   end
 
   # PUT /reports/1
