@@ -46,7 +46,7 @@ class ReportsController < ApplicationController
       report_list = params[:reportList]
 
       # create an object for each element of the array
-      rails_parsed_list.each do |object|
+      report_list.each do |object|
         # remove the sencha id
         object.delete(:id)
         # save record locally
