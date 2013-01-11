@@ -13,14 +13,16 @@ class Report < ActiveRecord::Base
   	}
 
   	# convert rails style to json
-  	batch_for_salesforce.to_json
+  	batch_for_salesforce = batch_for_salesforce.to_json
 
   	# prepare call
-  	endpoint = '/kio/v1.0/getNews'
-  	params   = '?' + 'delimitationDate=' + delimitation_date + '&latestOrMore=' + 'latest'
-  	url      = @@client.instance_url + '/services/apexrest' + endpoint + params
+  	endpoint = '/kio/v1.0/newReport'
+  	url      = @@client.instance_url + '/services/apexrest' + endpoint
 
 	  # send batch
+    result = @@client.http_post( url , data = batch_for_salesforce)
+
+    puts result
 
   	# if successfull delete the batch from the db
 
