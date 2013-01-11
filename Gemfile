@@ -1,5 +1,11 @@
 source 'https://rubygems.org'
 
+# Please address this security vulnerability by immediately upgrading your affected apps to any of the safe versions of Rails listed below. The following Rails versions have been patched and deemed safe from this exploit:
+#   3.2.11
+#   3.1.10
+#   3.0.19
+#   2.3.15
+# gem 'rails', '3.2.7'
 gem 'rails', '3.2.7'
 
 # Gems used only for assets and not required
