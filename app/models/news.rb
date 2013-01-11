@@ -9,8 +9,9 @@ class News < ActiveRecord::Base
 			# delimitation date is the date of the most recent news in the db
 			last_news         = News.order('date ASC').first
 			if( last_news )
-				delimitation_date = URI.escape(last_news[:date].to_s)
-				delimitation_date = delimitation_date[0...delimitation_date.length-6] # remove utc
+				delimitation_date = last_news[:date].to_json # changed format to standard one
+				# delimitation_date = URI.escape(last_news[:date].to_s)
+				# delimitation_date = delimitation_date[0...delimitation_date.length-6] # remove utc
 			else
 				delimitation_date = 'null'
 			end
