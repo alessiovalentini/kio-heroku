@@ -46,7 +46,7 @@ class News < ActiveRecord::Base
 
 
 		rescue Databasedotcom::SalesForceError => e
-			puts '> error getting news' + e.message
+			puts '> salesforce exception error getting news: ' + e.message
 		end
 	end
 end
