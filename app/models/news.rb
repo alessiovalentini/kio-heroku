@@ -7,7 +7,7 @@ class News < ActiveRecord::Base
 	def self.get_news_from_salesforce
 		begin
 			# delimitation date is the date of the most recent news in the db
-			last_news         = News.order('date ASC').first
+			last_news         = News.order('date DESC').first
 			if( last_news )
 				delimitation_date = last_news[:date].to_json # changed format to standard one
 				delimitation_date = delimitation_date[1...delimitation_date.length-1] # fix
