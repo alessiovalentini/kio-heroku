@@ -28,6 +28,10 @@ class News < ActiveRecord::Base
 			# http call
 			result   = @@client.http_get( url )
 
+			puts '>>> news'
+			puts result.body
+			puts '<<<'
+
 			if result.body.length != 0
 				# deserialize
 				parsed_json = ActiveSupport::JSON.decode(result.body)	#ActiveSuppor:: not required because already in the framework
@@ -40,7 +44,7 @@ class News < ActiveRecord::Base
 				end
 
 				# log
-				puts '> saved ' + result_news_list.length.to_s + 'news into the db'	   # nb convert int to string
+				puts '> saved ' + result_news_list.length.to_s + ' news into the db'	   # nb convert int to string
 			else
 				# log
 				puts '> no new news'

@@ -39,7 +39,7 @@ class Ground < ActiveRecord::Base
 
 
 		rescue Databasedotcom::SalesForceError => e
-			puts '> error getting grounds' + e.message
+			puts '> error getting grounds ' + e.message
 		end
     end
 

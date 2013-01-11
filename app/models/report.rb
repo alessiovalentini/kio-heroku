@@ -32,7 +32,6 @@ class Report < ActiveRecord::Base
           puts '> successfully sent reports to salesforce. deleted records from heroku db'
         else
           puts '>>> salesforce responded without success sending reports to it. records are kept in the db for the next try [result and result.body]'
-          puts result
           puts result.body
           puts '<<<'
         end
