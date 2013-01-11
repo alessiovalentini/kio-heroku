@@ -25,6 +25,9 @@ class Report < ActiveRecord::Base
     	  # send batch
         result = @@client.http_post( url , data = batch_for_salesforce)
 
+        # log
+        puts '> post reports call result: ' + result.body
+
         # if successfull delete the batch from the db
         if result.body == '"Success"' # NOTE salesforce is returning not Success but "Success"
           # success => remove the submitted records from local db

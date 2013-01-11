@@ -28,9 +28,8 @@ class News < ActiveRecord::Base
 			# http call
 			result   = @@client.http_get( url )
 
-			puts '>>> news'
-			puts result.body
-			puts '<<<'
+			# log
+			puts '> get news call result: ' + result.body
 
 			if result.body.length != 0
 				# deserialize

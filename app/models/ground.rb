@@ -21,6 +21,9 @@ class Ground < ActiveRecord::Base
 			# http call
 			result   = @@client.http_get( url )
 
+			# log
+			puts '> get grounds call result: ' + result.body
+
 			if result.body.length != 0
 				# deserialize
 				parsed_json = ActiveSupport::JSON.decode(result.body)	#ActiveSuppor:: not required because already in the framework
