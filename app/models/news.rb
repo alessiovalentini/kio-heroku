@@ -35,7 +35,7 @@ class News < ActiveRecord::Base
 				# deserialize
 				parsed_json = ActiveSupport::JSON.decode(result.body)	#ActiveSuppor:: not required because already in the framework
 				# transform to array with '=>'' instad of ':''
-				result_news_list = JSON.parse(parsed_json)
+				@result_record_list = JSON.parse(parsed_json)
 
 				# # create an object for each element of the array
 				# result_news_list.each do |object|
@@ -49,7 +49,7 @@ class News < ActiveRecord::Base
 				self.delete_deleted_news
 
 				# log
-				puts '> saved ' + result_news_list.length.to_s + ' news into the db'	   # nb convert int to string
+				puts '> saved ' + result_record_list.length.to_s + ' news into the db'	   # nb convert int to string
 			else
 				# log
 				puts '> no new news'
