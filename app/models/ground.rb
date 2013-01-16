@@ -60,6 +60,11 @@ class Ground < ActiveRecord::Base
 			# search if ground it's already present => if not save it
 			local_record = self.find_by_recordId(remote_record['Id'])
 
+			puts 'remote_record'
+			puts remote_record
+			puts 'local_record'
+			puts local_record
+
 			if local_record == nil
 				# create a new ground using the model attribs
 				new_ground = Ground.new(:recordId => remote_record['Id'],
