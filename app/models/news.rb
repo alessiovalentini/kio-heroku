@@ -77,6 +77,10 @@ class News < ActiveRecord::Base
 			local_record = self.find_by_recordId(remote_record['Id'])
 
 			if local_record == nil
+
+				puts 'remote_record'
+				puts remote_record
+
 				# create a new news using the model attribs
 				new_news = News.new(:recordId => remote_record['Id'],
 					                    :title => remote_record['Title'],
