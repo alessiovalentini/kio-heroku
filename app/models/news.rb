@@ -49,7 +49,7 @@ class News < ActiveRecord::Base
 				# self.delete_deleted_news
 
 				# log
-				puts '> saved ' + result_news_list.length.to_s + ' news into the db'	   # nb convert int to string
+				puts '> saved ' + @result_news_list.length.to_s + ' news into the db'	   # nb convert int to string
 			else
 				# log
 				puts '> no new news'
