@@ -1,7 +1,10 @@
 Kio::Application.routes.draw do
+
+  resources :feedbacks
   resources :reports
   resources :grounds
   resources :news
+
   # resources :authentications
 
   # custom routes (disable resources or use nested routes)

@@ -1,5 +1,5 @@
 class Ground < ActiveRecord::Base
-    attr_accessible :groundName, :recordId, :latitude, :longitude
+    attr_accessible :groundName, :recordId, :latitude, :longitude, :last_modified_date
 
     geocoded_by         :full_street_address
     reverse_geocoded_by :latitude, :longitude

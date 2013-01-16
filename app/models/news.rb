@@ -1,7 +1,7 @@
 require 'uri'
 
 class News < ActiveRecord::Base
-    attr_accessible :body, :date, :newsImageUrl, :recordId, :title
+    attr_accessible :body, :date, :newsImageUrl, :recordId, :title, :last_modified_date
 
   	# get the news from salesforce | https://<instance_url>/services/apexrest/kio/v1.0/getNews?delimitationDate=xx&latestOrMode=xx
 	def self.get_news_from_salesforce
