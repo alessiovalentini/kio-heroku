@@ -65,18 +65,19 @@ class Ground < ActiveRecord::Base
 				new_ground = Ground.new(:recordId => remote_record['Id'],
 					                    :groundName => remote_record['Name'],
 					                    :latitude => remote_record['Geolocation__Latitude__s'],
-					                    :longitude => remote_record['Geolocation__Longitude__s'])
+					                    :longitude => remote_record['Geolocation__Longitude__s'],
+										:last_modified_date => remote_record['LastModifiedDate'])
 				new_ground.save
 				# log
 				puts '> saved ground ' + remote_record.to_s
-			elsif local_record[:last_modified_date] < remote_record['LastModifiedDate']
-				# has been updated => update it
-				local_record.update_attributes!(:groundName => remote_record['Name'],
-												:latitude => remote_record['Geolocation__Latitude__s'],
-												:longitude => remote_record['Geolocation__Longitude__s'],
-												:last_modified_date => remote_record['LastModifiedDate'])
-				# log
-				puts '> updated ground ' + remote_record.to_s
+			# elsif local_record[:last_modified_date] < remote_record['LastModifiedDate']
+			# 	# has been updated => update it
+			# 	local_record.update_attributes!(:groundName => remote_record['Name'],
+			# 									:latitude => remote_record['Geolocation__Latitude__s'],
+			# 									:longitude => remote_record['Geolocation__Longitude__s'],
+			# 									:last_modified_date => remote_record['LastModifiedDate'])
+			# 	# log
+			# 	puts '> updated ground ' + remote_record.to_s
 			end
 		end
     end
