@@ -78,7 +78,7 @@ class News < ActiveRecord::Base
 
 			if local_record == nil
 
-				puts 'remote_record'
+				puts '**************************************************************************************************************remote_record'
 				puts remote_record
 
 				# create a new news using the model attribs
