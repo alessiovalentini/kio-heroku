@@ -64,6 +64,10 @@ class Ground < ActiveRecord::Base
 			puts remote_record
 			puts 'local_record'
 			puts local_record
+			puts 'remote_record[\'LastModifiedDate\']'
+			puts remote_record['LastModifiedDate']
+			puts 'local_record[:last_modified_date]'
+			puts local_record[:last_modified_date]
 
 			if local_record == nil
 				# create a new ground using the model attribs
