@@ -88,16 +88,16 @@ class News < ActiveRecord::Base
 				# log
 				puts '> saved news ' + remote_record.to_s
 			else
-				if local_record[:last_modified_date] < remote_record['LastModifiedDate']
-					# has been updated => update it
-					local_record.update_attributes!(:title => remote_record['Title'],
-									                    :body => remote_record['Body'],
-									                    :date => remote_record['Date'],
-														:newsImageUrl => remote_record['NewsImageUrl'],
-														:last_modified_date => remote_record['LastModifiedDate'])
-					# log
-					puts '> updated news ' + remote_record.to_s
-				end
+				# if local_record[:last_modified_date] < remote_record['LastModifiedDate']
+				# 	# has been updated => update it
+				# 	local_record.update_attributes!(:title => remote_record['Title'],
+				# 					                    :body => remote_record['Body'],
+				# 					                    :date => remote_record['Date'],
+				# 										:newsImageUrl => remote_record['NewsImageUrl'],
+				# 										:last_modified_date => remote_record['LastModifiedDate'])
+				# 	# log
+				# 	puts '> updated news ' + remote_record.to_s
+				# end
 			end
 		end
     end
