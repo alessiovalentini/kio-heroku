@@ -59,10 +59,7 @@ class Ground < ActiveRecord::Base
 			@remote_server_record_ids<<remote_record['Id']
 			# search if ground it's already present => if not save it
 			local_record = self.find_by_recordId(remote_record['Id'])
-			puts 'local_record ' +local_record
-			puts 'local_record[:last_modified_date] ' +local_record[:last_modified_date]
-			puts 'remote_record ' + remote_record
-			puts 'remote_record[\'LastModifiedDate\'] ' +remote_record['LastModifiedDate']
+
 			if local_record == nil
 				# create a new ground using the model attribs
 				new_ground = Ground.new(:recordId => remote_record['Id'],
