@@ -76,8 +76,10 @@ class News < ActiveRecord::Base
 			# search if news is already present => if not save it
 			local_record = self.find_by_recordId(remote_record['Id'])
 
-			puts '###########################################################localrecord'
-			puts local_record
+			#puts '###########################################################localrecord'
+			#puts local_record
+
+			puts remote_record['Id']
 
 			if local_record == nil
 
