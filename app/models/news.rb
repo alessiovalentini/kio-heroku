@@ -35,7 +35,7 @@ class News < ActiveRecord::Base
 				# deserialize
 				parsed_json = ActiveSupport::JSON.decode(result.body)	#ActiveSuppor:: not required because already in the framework
 				# transform to array with '=>'' instad of ':''
-				@result_record_list = JSON.parse(parsed_json)
+				@result_news_list = JSON.parse(parsed_json)
 
 				# # create an object for each element of the array
 				# result_news_list.each do |object|
@@ -49,7 +49,7 @@ class News < ActiveRecord::Base
 				self.delete_deleted_news
 
 				# log
-				puts '> saved ' + result_record_list.length.to_s + ' news into the db'	   # nb convert int to string
+				puts '> saved ' + result_news_list.length.to_s + ' news into the db'	   # nb convert int to string
 			else
 				# log
 				puts '> no new news'
@@ -70,7 +70,7 @@ class News < ActiveRecord::Base
 		# ids array for delete
 		@remote_server_record_ids = []
 		# create an record for each element of the array
-		@result_record_list.each do |remote_record|
+		@result_news_list.each do |remote_record|
 			# build remote recordIds array
 			@remote_server_record_ids<<remote_record['Id']
 			# search if news is already present => if not save it
@@ -109,11 +109,11 @@ class News < ActiveRecord::Base
 
 		# search for removed (or unpublished) records
 		local_record_list = News.all
-		result_record_list_size = @result_record_list.length
+		result_news_list_size = @result_news_list.length
 		local_record_list_size  = local_record_list.length
 
 		# if local records number not greater than remote we don't have to delete
-		if local_record_list_size > result_record_list_size
+		if local_record_list_size > result_news_list_size
 			# local recordIds array with parallel internal record ids array
 			local_server_record_ids  = []       # remote_server_record_ids generated before
 			local_internal_record_ids = []		# parallelal hash structure to save corrispondent internal id for fast delete
