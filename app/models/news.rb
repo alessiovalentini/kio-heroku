@@ -46,7 +46,7 @@ class News < ActiveRecord::Base
 				self.insert_update_news
 
 				# delete local records removed from the server
-				self.delete_deleted_news
+				# self.delete_deleted_news
 
 				# log
 				puts '> saved ' + result_news_list.length.to_s + ' news into the db'	   # nb convert int to string
