@@ -1,0 +1,5 @@
+LOG:  database system was shut down at 2013-01-12 15:36:49 GMT
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+ERROR:  column "latitude" of relation "grounds" already exists
+STATEMENT:  ALTER TABLE "grounds" ADD COLUMN "latitude" float
