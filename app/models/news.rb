@@ -37,10 +37,6 @@ class News < ActiveRecord::Base
 				# transform to array with '=>'' instad of ':''
 				@result_news_list = JSON.parse(parsed_json)
 
-
-				puts '@result_news_list before'
-				puts @result_news_list
-
 				# # create an object for each element of the array
 				# result_news_list.each do |object|
 				# 	self.create( object )
@@ -71,11 +67,6 @@ class News < ActiveRecord::Base
 		# insert - update
 		###############################################################################
 
-
-		puts '@result_news_list later'
-		puts @result_news_list
-
-
 		# ids array for delete
 		@remote_server_record_ids = []
 		# create an record for each element of the array
@@ -84,6 +75,9 @@ class News < ActiveRecord::Base
 			@remote_server_record_ids<<remote_record['Id']
 			# search if news is already present => if not save it
 			local_record = self.find_by_recordId(remote_record['Id'])
+
+			puts '###########################################################localrecord'
+			puts local_record
 
 			if local_record == nil
 
