@@ -38,7 +38,7 @@ class News < ActiveRecord::Base
 				@result_news_list = JSON.parse(parsed_json)
 
 				# create an object for each element of the array
-				result_news_list.each do |object|
+				@result_news_list.each do |object|
 					self.create( object )
 				end
 
