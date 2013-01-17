@@ -37,13 +37,13 @@ class News < ActiveRecord::Base
 				# transform to array with '=>'' instad of ':''
 				@result_news_list = JSON.parse(parsed_json)
 
-				# # create an object for each element of the array
-				# result_news_list.each do |object|
-				# 	self.create( object )
-				# end
+				# create an object for each element of the array
+				result_news_list.each do |object|
+					self.create( object )
+				end
 
 				# insert or update new records
-				self.insert_update_news
+				# self.insert_update_news
 
 				# delete local records removed from the server
 				# self.delete_deleted_news
