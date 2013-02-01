@@ -59,23 +59,27 @@ class Ground < ActiveRecord::Base
 			@remote_server_record_ids<<remote_record['Id']
 			# search if ground it's already present => if not save it
 			local_record = self.find_by_recordId(remote_record['Id'])
+
 			if local_record == nil
 				# create a new ground using the model attribs
 				new_ground = Ground.new(:recordId => remote_record['Id'],
 					                    :groundName => remote_record['Name'],
 					                    :latitude => remote_record['Geolocation__Latitude__s'],
-					                    :longitude => remote_record['Geolocation__Longitude__s'])
+					                    :longitude => remote_record['Geolocation__Longitude__s'],
+										:last_modified_date => remote_record['LastModifiedDate'])
 				new_ground.save
 				# log
 				puts '> saved ground ' + remote_record.to_s
-			# elsif local_record[:last_modified_date] < remote_record['LastModifiedDate']
-			# 	# has been updated => update it
-			# 	local_record.update_attributes!(:groundName => remote_record['Name'],
-			# 									:latitude => remote_record['Geolocation__Latitude__s'],
-			# 									:longitude => remote_record['Geolocation__Longitude__s'],
-			# 									:last_modified_date => remote_record['LastModifiedDate'])
-			# 	# log
-			# 	puts '> updated ground ' + remote_record.to_s
+			else
+				if local_record[:last_modified_date] < remote_record['LastModifiedDate']
+					# has been updated => update it
+					local_record.update_attributes!(:groundName => remote_record['Name'],
+													:latitude => remote_record['Geolocation__Latitude__s'],
+													:longitude => remote_record['Geolocation__Longitude__s'],
+													:last_modified_date => remote_record['LastModifiedDate'])
+					# log
+					puts '> updated ground ' + remote_record.to_s
+				end
 			end
 		end
     end

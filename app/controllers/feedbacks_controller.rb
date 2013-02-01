@@ -40,16 +40,32 @@ class FeedbacksController < ApplicationController
   # POST /feedbacks
   # POST /feedbacks.json
   def create
-    @feedback = Feedback.new(params[:feedback])
+
+    begin
+
+      feedback_list = params[:feedbackList]
+
+      # create an object for each element of the array
+      feedback_list.each do |object|
+        # remove the sencha id
+        object.delete(:id)
+        # save record locally
+        Feedback.create( object )
+      end
+
+      # set success status
+      saved  = params[:feedbackList]
+      @status = { :status => '200', :statusText => 'success', :saved => saved }
+
+    rescue => e
+      puts '> error saving feedbacks ' + e.message
+      # set error status
+      @status = { :status => '500', :statusText => e.message, :saved => nil }
+    end
 
     respond_to do |format|
-      if @feedback.save
-        format.html { redirect_to @feedback, notice: 'Feedback was successfully created.' }
-        format.json { render json: @feedback, status: :created, location: @feedback }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @feedback.errors, status: :unprocessable_entity }
-      end
+        format.html { redirect_to @feedbacks, notice: 'Feedback was successfully created.' }
+        format.json { render json: @status, status: :ok, location: @feedbacks }
     end
   end
 
