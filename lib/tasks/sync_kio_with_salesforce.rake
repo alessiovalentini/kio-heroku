@@ -1,5 +1,4 @@
-
-desc "This task syncs the app with salesforce every 1 hour"
+desc "This task syncs the app with salesforce every 10 mins (as per heroku scheduler setting)"
 task :sync_kio_with_salesforce => :environment do
 
 	# get news
