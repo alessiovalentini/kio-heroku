@@ -9,7 +9,7 @@ class GroundsController < ApplicationController
       else
         all_grounds_order_by_name = Ground.where("\"groundName\" != 'Other Ground'").order("\"groundName\" ASC")
         other_ground = Ground.where("\"groundName\" = 'Other Ground'")
-        nearest_grounds = Ground.near( [params[:lat], params[:lng]], 10, :order => :distance )
+        nearest_grounds = Ground.near( [params[:lat], params[:lng]], 3, :order => :distance )
         @grounds = nearest_grounds + other_ground + (all_grounds_order_by_name - nearest_grounds)
       end
 
