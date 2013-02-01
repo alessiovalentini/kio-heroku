@@ -7,15 +7,15 @@ class News < ActiveRecord::Base
 	def self.get_news_from_salesforce
 		begin
 			# delimitation date is the date of the most recent news in the db
-			last_news         = News.order('date DESC').first
-			if( last_news )
-				delimitation_date = last_news[:date].to_json # changed format to standard one
-				delimitation_date = delimitation_date[1...delimitation_date.length-1] # fix
-				# delimitation_date = URI.escape(last_news[:date].to_s)
-				# delimitation_date = delimitation_date[0...delimitation_date.length-6] # remove utc
-			else
+			# last_news         = News.order('date DESC').first
+			# if( last_news )
+			# 	delimitation_date = last_news[:last_modified_date].to_json # changed format to standard one --- NOTE changed from date to last_modified_date even if the webservice is returning that as date
+			# 	delimitation_date = delimitation_date[1...delimitation_date.length-1] # fix
+			# 	# delimitation_date = URI.escape(last_news[:date].to_s)
+			# 	# delimitation_date = delimitation_date[0...delimitation_date.length-6] # remove utc
+			# else
 				delimitation_date = 'null'
-			end
+			# end
 
 			# prepare call
 			endpoint = '/kio/v1.0/getNews'
@@ -29,32 +29,28 @@ class News < ActiveRecord::Base
 			result   = @@client.http_get( url )
 
 			# log
-			puts '> get news call result: ' + result.body
+			# puts '> get news call result: ' + result.body
 
 			if result.body.length != 0
 				# deserialize
 				parsed_json = ActiveSupport::JSON.decode(result.body)	#ActiveSuppor:: not required because already in the framework
 				# transform to array with '=>'' instad of ':''
-				result_news_list = JSON.parse(parsed_json)
+				@result_news_list = JSON.parse(parsed_json)
 
-				# create an object for each element of the array
-				result_news_list.each do |object|
-					self.create( object )
-				end
+				# # create an object for each element of the array
+				# result_news_list.each do |object|
+				# 	self.create( object )
+				# end
 
 				# insert or update new records
-				# self.insert_update_news
+				self.insert_update_news
 
 				# delete local records removed from the server
-				# self.delete_deleted_news
+				self.delete_deleted_news
 
 				# log
-				puts '> saved ' + result_news_list.length.to_s + ' news into the db'	   # nb convert int to string
-			else
-				# log
-				puts '> no new news'
+				#puts '> saved ' + result_news_list.length.to_s + ' news into the db'	   # nb convert int to string
 			end
-
 
 		rescue Databasedotcom::SalesForceError => e
 			puts '> salesforce exception error getting news: ' + e.message
@@ -72,41 +68,31 @@ class News < ActiveRecord::Base
 		# create an record for each element of the array
 		@result_news_list.each do |remote_record|
 			# build remote recordIds array
-			@remote_server_record_ids<<remote_record['Id']
+			@remote_server_record_ids<<remote_record['recordId']
 			# search if news is already present => if not save it
-			local_record = self.find_by_recordId(remote_record['Id'])
-
-			#puts '###########################################################localrecord'
-			#puts local_record
-
-			puts remote_record['Id']
+			local_record = self.find_by_recordId(remote_record['recordId'])
 
 			if local_record == nil
 
-				puts '**************************************************************************************************************remote_record'
-				puts remote_record
-
 				# create a new news using the model attribs
-				new_news = News.new(:recordId => remote_record['Id'],
-					                    :title => remote_record['Title'],
-					                    :body => remote_record['Body'],
-					                    :date => remote_record['Date'],
-										:newsImageUrl => remote_record['NewsImageUrl'],
-										:last_modified_date => remote_record['LastModifiedDate'])
+				new_news = News.new(:recordId => remote_record['recordId'],
+				                    :title    => remote_record['title'],
+				                    :body     => remote_record['body'],
+									:newsImageUrl => remote_record['newsImageUrl'],
+									:last_modified_date => remote_record['date'])	# NOTE the last_modified_date is returned as date from the WS
 				new_news.save
 				# log
-				puts '> saved news ' + remote_record.to_s
+				puts '> saved news ' + remote_record['title']
 			else
-				# if local_record[:last_modified_date] < remote_record['LastModifiedDate']
-				# 	# has been updated => update it
-				# 	local_record.update_attributes!(:title => remote_record['Title'],
-				# 					                    :body => remote_record['Body'],
-				# 					                    :date => remote_record['Date'],
-				# 										:newsImageUrl => remote_record['NewsImageUrl'],
-				# 										:last_modified_date => remote_record['LastModifiedDate'])
-				# 	# log
-				# 	puts '> updated news ' + remote_record.to_s
-				# end
+				if local_record[:last_modified_date] < ActiveSupport::TimeZone['UTC'].parse( remote_record['date'] )
+					# has been updated => update it
+					local_record.update_attributes!(:title => remote_record['title'],
+								                    :body  => remote_record['body'],
+													:newsImageUrl => remote_record['newsImageUrl'],
+													:last_modified_date => remote_record['date'])
+					# log
+					puts '> updated news ' + local_record[:title]
+				end
 			end
 		end
     end
@@ -128,7 +114,10 @@ class News < ActiveRecord::Base
 			local_internal_record_ids = []		# parallelal hash structure to save corrispondent internal id for fast delete
 			local_record_list.each do |local_record|
 				local_server_record_ids<<local_record[:recordId]
-				local_internal_record_ids<<{ :server_id => local_record[:recordId], :internal_id => local_record[:id] } # to speed up deletion
+				local_internal_record_ids<<{
+											 :server_id => local_record[:recordId],
+											 :internal_id => local_record[:id]
+										   } # to speed up deletion create an hash
 			end
 
 			# difference to find record to be deleted

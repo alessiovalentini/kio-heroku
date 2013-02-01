@@ -22,7 +22,7 @@ class Ground < ActiveRecord::Base
 			result   = @@client.http_get( url )
 
 			# log
-			puts '> get grounds call result: ' + result.body
+			# puts '> get grounds call result: ' + result.body
 
 			if result.body.length != 0
 				# deserialize
@@ -35,9 +35,6 @@ class Ground < ActiveRecord::Base
 
 				# delete local records removed from the server
 				self.delete_deleted_grounds
-			else
-				# log
-				puts '> no new grounds'
 			end
 
 
@@ -69,16 +66,25 @@ class Ground < ActiveRecord::Base
 										:last_modified_date => remote_record['LastModifiedDate'])
 				new_ground.save
 				# log
-				puts '> saved ground ' + remote_record.to_s
+				puts '> saved ground ' + remote_record['Name']
 			else
-				if local_record[:last_modified_date] < remote_record['LastModifiedDate']
+
+				# if local_record[:last_modified_date] < ActiveSupport::TimeZone['UTC'].parse(remote_record['LastModifiedDate'])
+				# 	puts '> update ground'
+				# 	puts 'REMOTE ' + remote_record['Name'] + ' ' + ActiveSupport::TimeZone['UTC'].parse(remote_record['LastModifiedDate']).to_s
+				# 	puts 'LOCAL ' + local_record[:groundName] + ' ' + local_record[:last_modified_date].to_s
+				# else
+				# 	puts 'COMPARISON false'
+				# end
+
+				if local_record[:last_modified_date] < ActiveSupport::TimeZone['UTC'].parse( remote_record['LastModifiedDate'] )
 					# has been updated => update it
 					local_record.update_attributes!(:groundName => remote_record['Name'],
 													:latitude => remote_record['Geolocation__Latitude__s'],
 													:longitude => remote_record['Geolocation__Longitude__s'],
 													:last_modified_date => remote_record['LastModifiedDate'])
 					# log
-					puts '> updated ground ' + remote_record.to_s
+					puts '> updated ground ' + local_record[:groundName]
 				end
 			end
 		end
@@ -124,7 +130,7 @@ class Ground < ActiveRecord::Base
 				Ground.delete( to_be_removed_internal_record_ids )
 
 				# log
-				puts '> removed grounds with internal ids ' + to_be_removed_internal_record_ids.to_s
+				puts '> removed ground with internal ids ' + to_be_removed_internal_record_ids.to_s
 			end
 		end
     end

@@ -41,6 +41,9 @@ gem 'geocoder'
 # better printing in rails console (use ap <command>)
 gem 'awesome_print'
 
+# better console
+gem 'irt'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
