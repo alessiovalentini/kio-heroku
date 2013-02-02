@@ -6,12 +6,12 @@ class NewsController < ApplicationController
     begin
 
       if( params[:delimitationDate] == 'null' )
-        @news = News.order("date DESC").limit(6) # Gets more news
+        @news = News.order("last_modified_date DESC").limit(6) # Gets more news
       else
         if( params[:latestOrMore] == 'more' )
-          @news = News.where("date < ?", params[:delimitationDate]).limit(6).order("date DESC") # Gets more news
+          @news = News.where("last_modified_date < ?", params[:delimitationDate]).limit(6).order("last_modified_date DESC") # Gets more news
         else
-          @news = News.where("date > ?", params[:delimitationDate]).limit(100).order("date DESC") # Gets latest news
+          @news = News.where("last_modified_date > ?", params[:delimitationDate]).limit(100).order("last_modified_date DESC") # Gets latest news
         end
       end
 
