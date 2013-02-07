@@ -7,8 +7,8 @@ class GroundsController < ApplicationController
       if( params[:lat] == 'null' ||   params[:lng] == 'null' )
         @grounds = Ground.order("\"groundName\" ASC") # gets all grounds ordered by name
       else
-        all_grounds_order_by_name = Ground.where("\"groundName\" != 'Other Ground'").order("\"groundName\" ASC")
-        other_ground = Ground.where("\"groundName\" = 'Other Ground'")
+        all_grounds_order_by_name = Ground.where("\"groundName\" != 'Non League/Grassroots'").order("\"groundName\" ASC")
+        other_ground = Ground.where("\"groundName\" = 'Non League/Grassroots'")
         nearest_grounds = Ground.near( [params[:lat], params[:lng]], 3, :order => :distance )
         @grounds = nearest_grounds + other_ground + (all_grounds_order_by_name - nearest_grounds)
       end
